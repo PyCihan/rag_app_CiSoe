@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pdf-list-container {
+            flex: 1;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        #pdf-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #pdf-list li {
+            margin-bottom: 5px;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        .left-pane {
+            width: 66.6%; /* 2/3 der Breite */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Um das Eingabefeld nach unten zu schieben */
+            background-color: #f4f4f4;
+        }
+        
+        .container-main {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f4f4f4;
+        }
+
+        .right-pane {
+            width: 33.3%;
+            padding: 20px;
+            background-color: #e9e9e9;
+            border-left: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            align-self: stretch;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #f1f1f1;
+        }
+
+        .message-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .message-label {
+            font-size: 0.8em;
+            margin-bottom: 0.2rem;
+            font-weight: bold;
+        }
+
+        .user-group {
+            align-items: flex-end;
+        }
+
+        .system-group {
+            align-items: flex-start;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        .user-message {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .system-message {
+            background-color: #e8f5e9;
+            color: black;
+        }
+
+        .dark-mode .system-message {
+            background-color: #555;
+            color: #f1f1f1;
+        }
+
+        .input-container {
+            
+
+        }
+
+        .dark-mode .input-container {
+            background-color: #444;
+            border-top-color: #666;
+        }
+
+        .chat-input {
+            resize: none;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg" style="background-color: #28a745;">
+        <div class="container">
+            <a class="navbar-brand text-white" href="/">IDT RAG4SOP</a>
+            <a class="navbar-brand text-white" href="/interactive_chat">General Chat</a>
+            <div class="ms-auto d-flex align-items-center">
+                <button class="btn btn-outline-light me-3" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+                <img src="/static/img/img1.png" alt="Profile" width="40" height="40" class="rounded-circle">
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-main">
+        <div class="left-pane">
+            <div class="chat-container" id="chatContainer">
+            </div>
+
+            <div class="input-container">
+                <div class="container">
+                    <div class="input-group">
+                        <textarea class="form-control chat-input" id="query" placeholder="Ask a general question..." aria-label="Chat input"></textarea>
+                        <button class="btn" type="button" id="submitBtn" onclick="queryPDF()" style="background-color: #28a745; color: white;">Submit Query</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-pane">
+            <h3>Uploaded PDFs:</h3>
+        
+            <div class="pdf-list-container">
+                <ul id="pdf-list"></ul>
+            </div>
+        
+            <div class="form-group">
+                <label for="pdf">Upload PDF:</label>
+                <input type="file" id="pdf" />
+            </div>
+        
+            <button onclick="uploadPDF()">Upload PDF</button>
+        
+            <p id="upload-status"></p>
+            
+            <h3>Sources:</h3> 
+            <ul id="sources-list"></ul> 
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
